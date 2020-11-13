@@ -57,7 +57,7 @@ func (fes *Fes) Tide(lat float64, lon float64, time time.Time) (Tide, error) {
 		&hLongPeriod,
 	)
 	if ok == 0 {
-		return Tide(float64(h), float64(hLongPeriod)), nil
+		return Tide{float64(h), float64(hLongPeriod)}, nil
 	} else if ok == 1 {
 		return nil, error.Error("FES returned error status for tides")
 	}
@@ -79,5 +79,5 @@ func NewFes(tideType TideType, mode Mode, path string) *Fes {
 	cpath := C.C
 	// TODO: Can cast int to enum?
 	C.fes_new(handle, C.fes_enum_tide_type(tideType), C.fes_enum_access(mode))
-	return Fes{handle}
+	return &Fes{handle}
 }
