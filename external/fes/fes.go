@@ -9,8 +9,6 @@ import (
 	"math"
 	"time"
 	"unsafe"
-
-	"github.com/molflow/gofes/external/cnes"
 )
 
 // Mode ...
@@ -51,7 +49,7 @@ func (fes *Fes) Tide(lat float64, lon float64, time time.Time) (Tide, error) {
 	}
 	h := C.double(math.NaN())
 	hLongPeriod := C.double(math.NaN())
-	julian := cnes.JulianDate(time)
+	julian := JulianDate(time)
 
 	ok := C.fes_core(
 		*fes.handle,
