@@ -21,10 +21,9 @@ jobs:
       with:
         ref: ${{ github.head_ref }}
 
-    - name: Get system dependencies
+    - name: Install libfes.so
       run: |
         sudo apt install -y libnetcdf-dev
-        go get golang.org/x/lint
         cd /tmp
         wget https://bitbucket.org/cnes_aviso/fes/downloads/fes-2.9.3-Source.tar.xz
         tar -xJf fes-2.9.3-Source.tar.xz
@@ -36,6 +35,10 @@ jobs:
         sudo make install
         cd /tmp
         rm -r fes-2.9.3-Source*
+
+    - name: Install go tools
+      run: |
+        go get -v -t -d golang.org/x/lint
 
     - name: Build
       run: make build
