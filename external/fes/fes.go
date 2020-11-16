@@ -1,9 +1,7 @@
 package fes
 
-// #cgo CFLAGS: -I${SRCDIR}/../../third-party/fes-2.9.3-Source/include
-// #cgo LDFLAGS: -L${SRCDIR}/../../third-party/fes-2.9.3-Source/build/src -lfes
 // #include <stdlib.h>
-// #include "fes.h"
+// #include <fes.h>
 import "C"
 import (
 	"fmt"
