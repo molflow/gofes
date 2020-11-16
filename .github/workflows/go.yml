@@ -24,6 +24,7 @@ jobs:
     - name: Get system dependencies
       run: |
         sudo apt install -y libnetcdf-dev
+        go get golang.org/x/lint
         cd /tmp
         wget https://bitbucket.org/cnes_aviso/fes/downloads/fes-2.9.3-Source.tar.xz
         tar -xJf fes-2.9.3-Source.tar.xz
