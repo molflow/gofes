@@ -47,7 +47,7 @@ type Fes struct {
 // Tide ...
 func (fes *Fes) Tide(lat float64, lon float64, time time.Time) (Tide, error) {
 	if fes.handle == nil {
-		return Tide{}, fmt.Errorf("")
+		return Tide{}, fmt.Errorf("FES is not properly initialized or already closed")
 	}
 	h := C.double(math.NaN())
 	hLongPeriod := C.double(math.NaN())
@@ -72,7 +72,6 @@ func (fes *Fes) Tide(lat float64, lon float64, time time.Time) (Tide, error) {
 // Close ...
 func (fes *Fes) Close() {
 	C.fes_delete(*fes.handle)
-	C.free(unsafe.Pointer(fes.handle))
 	fes.handle = nil
 }
 
