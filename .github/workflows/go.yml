@@ -34,7 +34,7 @@ jobs:
         make -j
         sudo make install
         cd /tmp
-        rm -r fes-2.9.1-Source*
+        rm -r fes-2.9.3-Source*
 
     - name: Get dependencies
       run: |
