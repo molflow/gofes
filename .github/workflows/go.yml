@@ -25,7 +25,7 @@ jobs:
       uses: actions/checkout@v2
       with:
         repository: molflow/fes2014
-        token: ${{ secrets.my_pat }}
+        token: ${{ secrets.data_repo_pat }}
         path: gofes/third-party/fes2014-data
 
     - name: Install libfes.so
