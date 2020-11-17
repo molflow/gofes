@@ -24,9 +24,9 @@ jobs:
     - name: Check out test data
       uses: actions/checkout@v2
       with:
-        repository: molflow/fes2014
+        repository: molflow/fes2014-data
         token: ${{ secrets.data_repo_pat }}
-        path: gofes/third-party/fes2014-data
+        path: gofes/third-party/
 
     - name: Install libfes.so
       run: |
