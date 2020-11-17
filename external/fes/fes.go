@@ -49,7 +49,7 @@ type Fes struct {
 	handle *C.FES
 }
 
-// Tide returns the height and long period height for supplied coordinates and time
+// Tide returns the height and long period height [cm] for supplied coordinates and time
 func (fes *Fes) Tide(lat float64, lon float64, time time.Time) (float64, float64, error) {
 	if fes.handle == nil {
 		return 0, 0, fmt.Errorf("FES is not properly initialized or already closed")
