@@ -39,7 +39,8 @@ jobs:
     - name: Install go tools
       run: |
         go get -v -t -d golang.org/x/lint
-        which golint
+        ls /home/runner/go
+        ls /home/runner/go/bin
 
     - name: Build
       run: make build
