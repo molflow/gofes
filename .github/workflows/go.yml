@@ -45,7 +45,6 @@ jobs:
 
     - name: Install go tools
       run: |
-        ls -R /home/runner/work/gofes
         go get -u golang.org/x/lint/golint
 
     - name: Build
