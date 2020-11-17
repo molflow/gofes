@@ -145,13 +145,13 @@ func TestFes_Tide(t *testing.T) {
 				t.Errorf("Could not init the FES")
 			} else {
 				defer fes.Close()
-				got, err := fes.Tide(tt.args.lat, tt.args.lon, tt.args.time)
+				height, heightLongPeriod, err := fes.Tide(tt.args.lat, tt.args.lon, tt.args.time)
 				if (err != nil) != tt.wantErr {
 					t.Errorf("Fes.Tide() error = %v, wantErr %v", err, tt.wantErr)
 					return
 				}
-				if !approx(got.Height, tt.wantH, 0.01) || !approx(got.HeightLongPeriod, tt.wantHLongPeriod, 0.01) {
-					t.Errorf("Fes.Tide() = %v, want {%v, %v}", got, tt.wantH, tt.wantHLongPeriod)
+				if !approx(height, tt.wantH, 0.01) || !approx(heightLongPeriod, tt.wantHLongPeriod, 0.01) {
+					t.Errorf("Fes.Tide() = %v, %v, want %v, %v", height, heightLongPeriod, tt.wantH, tt.wantHLongPeriod)
 				}
 			}
 		})

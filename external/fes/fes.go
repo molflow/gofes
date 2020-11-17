@@ -44,21 +44,15 @@ const (
 	RadialTide
 )
 
-// Tide ...
-type Tide struct {
-	Height           float64
-	HeightLongPeriod float64
-}
-
 // Fes ...
 type Fes struct {
 	handle *C.FES
 }
 
-// Tide ...
-func (fes *Fes) Tide(lat float64, lon float64, time time.Time) (Tide, error) {
+// Tide returns the height and long period height for supplied coordinates and time
+func (fes *Fes) Tide(lat float64, lon float64, time time.Time) (float64, float64, error) {
 	if fes.handle == nil {
-		return Tide{}, fmt.Errorf("FES is not properly initialized or already closed")
+		return 0, 0, fmt.Errorf("FES is not properly initialized or already closed")
 	}
 	h := C.double(math.NaN())
 	hLongPeriod := C.double(math.NaN())
@@ -73,11 +67,11 @@ func (fes *Fes) Tide(lat float64, lon float64, time time.Time) (Tide, error) {
 		&hLongPeriod,
 	)
 	if ok == 0 {
-		return Tide{float64(h), float64(hLongPeriod)}, nil
+		return float64(h), float64(hLongPeriod), nil
 	} else if ok == 1 {
-		return Tide{}, fmt.Errorf("FES returned error status for tides")
+		return 0, 0, fmt.Errorf("FES returned error status for tides")
 	}
-	return Tide{}, fmt.Errorf("FES returned unexpected error status %v for tides", ok)
+	return 0, 0, fmt.Errorf("FES returned unexpected error status %v for tides", ok)
 }
 
 // Close ...
