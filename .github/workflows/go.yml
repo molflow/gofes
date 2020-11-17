@@ -1,0 +1,57 @@
+name: Go
+
+on:
+  push:
+
+jobs:
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Set up Go 1.14
+      uses: actions/setup-go@v1
+      with:
+        go-version: 1.14
+      id: go
+
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v1
+      with:
+        ref: ${{ github.head_ref }}
+
+    - name: Check out test data
+      uses: actions/checkout@v2
+      with:
+        repository: molflow/fes2014-data
+        token: ${{ secrets.data_repo_pat }}
+        path: third-party/fes2014-data/
+
+    - name: Install libfes.so
+      run: |
+        sudo apt install -y libnetcdf-dev
+        cd /tmp
+        wget https://bitbucket.org/cnes_aviso/fes/downloads/fes-2.9.3-Source.tar.xz
+        tar -xJf fes-2.9.3-Source.tar.xz
+        cd fes-2.9.3-Source
+        mkdir build
+        cd build
+        cmake .. -DBUILD_PYTHON=off -DPYTHON_EXECUTABLE=/usr/bin/python -DBUILD_SHARED_LIBS=on -DCMAKE_INSTALL_PREFIX=/usr
+        make -j
+        sudo make install
+        cd /tmp
+        rm -r fes-2.9.3-Source*
+
+    - name: Install go tools
+      run: |
+        go get -u golang.org/x/lint/golint
+
+    - name: Build
+      run: make build
+
+    - name: Lint
+      run: make lint
+
+    - name: Test
+      run: make test
