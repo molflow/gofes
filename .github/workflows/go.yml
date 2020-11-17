@@ -21,6 +21,13 @@ jobs:
       with:
         ref: ${{ github.head_ref }}
 
+    - name: Check out test data
+      uses: actions/checkout@v2
+      with:
+        repository: molflow/fes2014
+        token: ${{ secrets.my_pat }}
+        path: gofes/third-party/fes2014-data
+
     - name: Install libfes.so
       run: |
         sudo apt install -y libnetcdf-dev
