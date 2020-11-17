@@ -90,6 +90,42 @@ func TestFes_Tide(t *testing.T) {
 			false,
 		},
 		{
+			"Get ocean tide changes with lat",
+			fesSettings{OceanTide, ModeMem},
+			args{
+				1,
+				0,
+				time.Date(2020, 11, 16, 13, 0, 0, 0, time.UTC),
+			},
+			-30.16,
+			-0.72,
+			false,
+		},
+		{
+			"Get ocean tide changes with lon",
+			fesSettings{OceanTide, ModeMem},
+			args{
+				0,
+				2,
+				time.Date(2020, 11, 16, 13, 0, 0, 0, time.UTC),
+			},
+			-24.11,
+			-0.71,
+			false,
+		},
+		{
+			"Changes with time",
+			fesSettings{OceanTide, ModeMem},
+			args{
+				0,
+				0,
+				time.Date(2020, 11, 16, 18, 0, 0, 0, time.UTC),
+			},
+			51.97,
+			-0.96,
+			false,
+		},
+		{
 			"Get ocean tide io-mode",
 			fesSettings{OceanTide, ModeIO},
 			args{
