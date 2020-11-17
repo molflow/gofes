@@ -60,6 +60,10 @@ func TestNewFes(t *testing.T) {
 }
 
 func TestFes_Tide(t *testing.T) {
+	type fesSettings struct {
+		tide TideType
+		mode Mode
+	}
 	type args struct {
 		lat  float64
 		lon  float64
@@ -67,13 +71,15 @@ func TestFes_Tide(t *testing.T) {
 	}
 	tests := []struct {
 		name            string
+		fesSettings     fesSettings
 		args            args
 		wantH           float64
 		wantHLongPeriod float64
 		wantErr         bool
 	}{
 		{
-			"Get some tide",
+			"Get ocean tide mem-mode",
+			fesSettings{OceanTide, ModeMem},
 			args{
 				0,
 				0,
@@ -83,10 +89,58 @@ func TestFes_Tide(t *testing.T) {
 			-0.71,
 			false,
 		},
+		{
+			"Get ocean tide io-mode",
+			fesSettings{OceanTide, ModeIO},
+			args{
+				0,
+				0,
+				time.Date(2020, 11, 16, 13, 0, 0, 0, time.UTC),
+			},
+			-27.9,
+			-0.71,
+			false,
+		},
+		{
+			"Get radial tide mem-mode",
+			fesSettings{RadialTide, ModeMem},
+			args{
+				0,
+				0,
+				time.Date(2020, 11, 16, 13, 0, 0, 0, time.UTC),
+			},
+			1.8,
+			0,
+			false,
+		},
+		{
+			"Get radial tide io-mode",
+			fesSettings{RadialTide, ModeIO},
+			args{
+				0,
+				0,
+				time.Date(2020, 11, 16, 13, 0, 0, 0, time.UTC),
+			},
+			1.8,
+			0,
+			false,
+		},
+		{
+			"Continental Point of Inaccessibility errors because very much on land",
+			fesSettings{OceanTide, ModeMem},
+			args{
+				46.283333,
+				86.666667,
+				time.Date(2020, 11, 16, 13, 0, 0, 0, time.UTC),
+			},
+			0,
+			0,
+			true,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			fes, initerr := NewFes(OceanTide, ModeMem, inifile)
+			fes, initerr := NewFes(tt.fesSettings.tide, tt.fesSettings.mode, inifile)
 			if initerr != nil {
 				t.Errorf("Could not init the FES")
 			}
