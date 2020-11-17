@@ -26,7 +26,7 @@ jobs:
       with:
         repository: molflow/fes2014-data
         token: ${{ secrets.data_repo_pat }}
-        path: gofes/third-party/
+        path: third-party/fest2014-data/
 
     - name: Install libfes.so
       run: |
