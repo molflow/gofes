@@ -39,7 +39,7 @@ jobs:
     - name: Install go tools
       run: |
         go get -v -t -d golang.org/x/lint
-        locate golint
+        which golint
 
     - name: Build
       run: make build
