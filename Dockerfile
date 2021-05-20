@@ -1,7 +1,7 @@
 FROM golang:1.14
 RUN \
   apt-get update \
-  && apt-get install -y libnetcdf-dev protobuf-compiler xz-utils cmake \
+  && apt-get install -y libnetcdf-dev xz-utils cmake \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 RUN \
@@ -16,7 +16,7 @@ RUN \
   && make install \
   && cd /tmp \
   && rm -r fes-2.9.3-Source*
-  
+
 ENV GOFES_SRC=/go/src/github.com/molflow/gofes
 ADD . $GOFES_SRC
 
