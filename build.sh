@@ -2,4 +2,4 @@
 
 set -e
 
-docker build -t test:gofes .
+docker build -t molflow/gofes .
