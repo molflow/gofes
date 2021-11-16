@@ -7,7 +7,7 @@ This implements the interface of fes v2.9.3
 
 You need the libfes.so installed on your system:
 
-https://bitbucket.org/cnes_aviso/fes/src/master/
+https://github.com/CNES/aviso-fes
 
 You will also need fes-compatible data.
 For more information, check the link above.
