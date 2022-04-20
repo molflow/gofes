@@ -1,4 +1,4 @@
-FROM golang:1.14
+FROM golang:1.18
 RUN \
   apt-get update \
   && apt-get install -y libnetcdf-dev xz-utils cmake \
@@ -20,4 +20,4 @@ RUN \
 ENV GOFES_SRC=/go/src/github.com/molflow/gofes
 ADD . $GOFES_SRC
 
-RUN cd $GOFES_SRC && make build && make install
+RUN cd $GOFES_SRC && make init && make build && make install
